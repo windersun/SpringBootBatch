@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <Properties>
+        <Property name="PROJECT_NAME">springboot-cli</Property>
+        <Property name="LOG_DIR">/data/logs/${PROJECT_NAME}</Property>
+        <Property name="PATTERN">%d{yyyy-MM-dd'T'HH:mm:ss.SSSXXX} | %-5level | TH | AppLog | cli | %X{transactionID} | %X{clientIP} | JAVA | %thread | %c{2} | %msg%n
+        </Property>
+    </Properties>
+    <CustomLevels>
+        <CustomLevel name="EVENT" intLevel="450"/>
+    </CustomLevels>
+    <Appenders>
+        <RollingFile name="RollingFile" fileName="${LOG_DIR}/${PROJECT_NAME}.log"
+                     filePattern="${LOG_DIR}/$${date:yyyy-MM}/${PROJECT_NAME}-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>${PATTERN}</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="200 MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <Delete basePath="${LOG_DIR}" maxDepth="4">
+                    <IfFileName glob="*/${PROJECT_NAME}-*.log"></IfFileName>
+                    <IfLastModified age="15d"></IfLastModified>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern>${PATTERN}</Pattern>
+            </PatternLayout>
+        </Console>
+    </Appenders>
+    <Loggers>
+        <Root level="EVENT">
+            <AppenderRef ref="Console" level="EVENT" />
+            <AppenderRef ref="RollingFile" level="EVENT" />
+        </Root>
+        <Logger name="com.ascendcorp" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Logger>
+    </Loggers>
+</Configuration>

@@ -1,0 +1,7 @@
+
+.idea/
+spring-boot-cli.iml
+target/
+src/test/acceptance/log.html
+src/test/acceptance/output.xml
+src/test/acceptance/report.html
