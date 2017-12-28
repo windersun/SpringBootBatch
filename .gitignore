@@ -1,6 +1,6 @@
 
 .idea/
-spring-boot-cli.iml
+spring-boot-batch.iml
 target/
 src/test/acceptance/log.html
 src/test/acceptance/output.xml
